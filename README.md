@@ -20,19 +20,25 @@ The function needs an internet connection, [READHGT and DEM](https://fr.mathwork
 ```matlab
 % makes a figure centered on your present position on Earth
 whereami
+```
 
+```matlab
 % makes a figure centered on the IPGP institute in Paris, France.
 whereami('www.ipgp.fr')
+```
 
+![](whereami_example_ipgp.png)
+
+```matlab
 % makes a figure centered on latitude/longitude 53.38°N / 13.06°E,
 % which is the GFZ institute in Potsdam, Germany, with a 0.5° height.
 whereami([53.38 13.06],0.5)
 ```
 
-![](naninterp2_example.png)
+![](whereami_example_gfz.png)
 
 ## Author
 **François Beauducel**, [beaudu](https://github.com/beaudu), beauducel@ipgp.fr
 
 ## Documentation
-Type `doc whereami` for help and syntax. See also [![View NANINTERP2: 2-D optimized linear interpolation on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://fr.mathworks.com/matlabcentral/fileexchange/56948-naninterp2-2-d-optimized-linear-interpolation) users community comments.
+Type `doc whereami` for help and syntax. See also [![View WHEREAMI: Automatic geolocation map](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)]() users community comments.
