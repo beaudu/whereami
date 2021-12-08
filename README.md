@@ -41,4 +41,4 @@ whereami([53.38 13.06],0.5)
 **François Beauducel**, [beaudu](https://github.com/beaudu), beauducel@ipgp.fr
 
 ## Documentation
-Type `doc whereami` for help and syntax. See also [![View WHEREAMI: Automatic geolocation map](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)]() users community comments.
+Type `doc whereami` for help and syntax. See also [![View whereami on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://fr.mathworks.com/matlabcentral/fileexchange/103180-whereami) users community comments.
