@@ -39,7 +39,7 @@ function varargout=whereami(varargin)
 %
 %	Author: F. Beauducel <beauducel@ipgp.fr>
 %	Created: 2013-01-05
-%	Updated: 2021-12-08
+%	Updated: 2021-12-09
 
 if exist('readhgt','file') ~= 2 || exist('dem','file') ~= 2
 	error('This function needs the READHGT and DEM functions available at https://github/IPGP/mapping-matlab')
@@ -76,7 +76,7 @@ end
 % geolocation from IP
 if ~isfield(X,'lat')
 	url = [api X.host];
-	if ~exist('webread','file') == 2
+	if exist('webread','file') == 2
 		D = webread(url);
 		if ~isstruct(D) % for GNU Octave compatibility
 			D = json2struct(D);
@@ -84,9 +84,13 @@ if ~isfield(X,'lat')
 	else % backward compatibility for Matlab < 2014b
 		D = json2struct(urlread(url,'TimeOut',5));
 	end
-	X.lat = D.lat;
-	X.lon = D.lon;
-	X.query = D;
+	if ~isfield(D,'lat') || ~isfield(D,'lon')
+		error('%s cannot be geolocated.',X.host)
+	else
+		X.lat = D.lat;
+		X.lon = D.lon;
+		X.query = D;
+	end
 end
 
 % downloads SRTM tiles
@@ -119,15 +123,16 @@ function J=json2struct(json)
 
 C = textscan(json,'%s','delimiter',',');
 for n = 1:length(C{1})
-	ss = textscan(regexprep(C{1}{n},'[{}]',''),'%s','Delimiter',':');
-	s = ss{1};
-	key = regexprep(s{1},'"','');
-	if ~isempty(strfind(s{2},'"'))
-		val = regexprep(s{2},'"','');
-	else
-		val = str2double(s{2});
+	s = textscan(regexprep(C{1}{n},'[{}]',''),'%s','Delimiter',':');
+	key = regexprep(s{1}{1},'[".]',''); % removes any double quote or dot
+	if length(s{1}) > 1
+		if ~isempty(strfind(s{1}{2},'"'))
+			val = regexprep(s{1}{2},'"','');
+		else
+			val = str2double(s{1}{2});
+		end
+		J.(key) = val;
 	end
-	J.(key) = val;
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
